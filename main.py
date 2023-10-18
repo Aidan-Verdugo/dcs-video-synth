@@ -5,7 +5,7 @@ import os
 playlistdir = ("/home/videosynth/Music/songs")
 
 
-songs = os.lsitdir(playlistdir)
+songs = os.listdir(playlistdir)
 
 runner = 1
 

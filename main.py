@@ -1,17 +1,34 @@
 import vlc
 import time
 import os
+import RPi.GPIO as GPIO
 
+#setting up gpio
+GPIO.setwarnings(False) 
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(10, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+
+
+#setting up the playlist
 playlistdir = ("/home/videosynth/Music/songs")
-
-
 songs = os.listdir(playlistdir)
+songplaying = False
+songindex = 0
+media = vlc.MediaPlayer(playlistdir + "/" + songs[songindex])
 
-runner = 1
+while true:
+    
+    if GPIO.input(10) == GPIO.HIGH and songplaying == False:
+        media.play()
 
-while runner != 0:
-    media = vlc.MediaPlayer(playlistdir + "/" + songs[1])
-    media.play()
-    time.sleep(15)
+    if GPIO.input(10) == GPIO.HIGH and songplaying == True:
+        media.stop()
+        if songindex < len(songs):
+            songindex += 1
+        if songindex == len(songs):
+            songindex = 0
+        
+        media = vlc.MediaPlayer(playlistdir + "/" +songs[songindex])
 
 

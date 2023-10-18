@@ -1,7 +1,17 @@
 import vlc
+import time
+import os
 
-media = vlc.MediaPlayer("Playlist.m3u")
+playlistdir = ("/home/videosynth/Music/songs")
 
-media.play
+
+songs = os.lsitdir(playlistdir)
+
+runner = 1
+
+while runner != 0:
+    media = vlc.MediaPlayer(playlistdir + "/" + songs[1])
+    media.play()
+    time.sleep(15)
 
 

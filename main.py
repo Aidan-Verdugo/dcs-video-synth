@@ -22,6 +22,7 @@ while True:
     if GPIO.input(10) == GPIO.HIGH and songplaying == False:
         time.sleep(1)
         media.play()
+        songplaying = True
 
     if GPIO.input(10) == GPIO.HIGH and songplaying == True:
         time.sleep(1)
@@ -32,5 +33,6 @@ while True:
             songindex = 0
         
         media = vlc.MediaPlayer(playlistdir + "/" +songs[songindex])
+        songplaying = False
 
 

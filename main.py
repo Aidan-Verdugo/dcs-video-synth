@@ -17,7 +17,7 @@ songplaying = False
 songindex = 0
 media = vlc.MediaPlayer(playlistdir + "/" + songs[songindex])
 
-while true:
+while True:
     
     if GPIO.input(10) == GPIO.HIGH and songplaying == False:
         media.play()

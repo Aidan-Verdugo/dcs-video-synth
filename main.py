@@ -1,23 +1,34 @@
-import vlc
+from vlc import Instance
 import time
+import os
 
-def audio(source):
-    vlc_instance = vlc.Instance()
+class VLC:
+    def __init__(self):
+        self.Player = Instance('--loop')
 
-    player = vlc_instance.media_player_new()
+    def addPlaylist(self):
+        self.mediaList = self.Player.media_list_new()
+        path = r"~/Music/Playlist1.m3u"
+        songs = os.listdir(path)
+        for s in songs:
+            self.mediaList.add_media(self.Player.media_new(os.path.join(path,s)))
+        self.listPlayer = self.Player.media_list_player_new()
+        self.listPlayer.set_media_list(self.mediaList)
+    def play(self):
+        self.listPlayer.play()
+    def next(self):
+        self.listPlayer.next()
+    def pause(self):
+        self.listPlayer.pause()
+    def previous(self):
+        self.listPlayer.previous()
+    def stop(self):
+        self.listPlayer.stop()
 
-    media = vlc_instance.media_new(source)
+player = VLC()
 
-    player.set_media(media)
+player.addPlaylist()
 
-    player.play()
-
-    time.sleep(0.5)
-
-    duration = player.get_length()
-
-    print("Duration : " + str(duration))
-
-audio("~/Music/sleepyhead.mp3")
+player.play()
 
 
